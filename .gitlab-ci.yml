@@ -14,10 +14,8 @@ build_azure-iot-sdk-c:
     script:
         - ./setup.sh
         - ./build.sh
-        - shopt -s extglob
-        - rm -rf sample/binary output upload
         - mkdir -p upload/azure-iot-sdk-c
-        - cp -r !(upload) upload/azure-iot-sdk-c
+        - cp -r readme README.md upload/azure-iot-sdk-c
         - scm upload $CI_COMMIT_REF_NAME
 
 release_azure-iot-sdk-c:
@@ -27,15 +25,13 @@ release_azure-iot-sdk-c:
     only:
         - tags
     variables:
-        REPOSITORY: "git@github.com:kbwilson89/azure-iot-sdk-c.git"
+        REPOSITORY: "git@github.com:MoxaCorp/ioThinx-4530-azure-iot.git"
         BRANCH: "master"
     script:
         - ./setup.sh
         - ./build.sh
-        - shopt -s extglob
-        - rm -rf sample/binary output upload
         - mkdir -p upload/azure-iot-sdk-c
-        - cp -r !(upload) upload/azure-iot-sdk-c
+        - cp -r readme README.md upload/azure-iot-sdk-c
         - scm upload $CI_COMMIT_REF_NAME
         - git checkout -B $BRANCH
         - git push $REPOSITORY $BRANCH --tags --force

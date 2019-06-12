@@ -3,15 +3,17 @@
 
 # AZURE-IOT-SDK-C
 
-> **Description:**
+> **Table of Contents**
 >
-> Cloud: Create device instance for connecting by SDK program
+> [Cloud: Create device instance for connecting by SDK program](#cloud-azure)
 >
-> Host: Cross-compiling the SDK
+> [Host: Cross-compiling the SDK](#host-x86_64-linux)
 >
-> Target: Executing the SDK program
+> [Target: Executing the SDK program](#target-arm-linux)
 
 ## Cloud (Azure)
+
+> Create device instance for connecting by SDK program
 
 ### Sign in to Cloud
 
@@ -63,6 +65,10 @@
 
 ### Copy Device Connection String
 
+> **Device Connection String** is the key to build connection between physical and virtual device on cloud
+>
+> You will need this infomation in the section [Build the SDK](#build-the-sdk)
+
 1. In the left navigation pane, choose **All resources**, then search and choose the **[IoT Hub you create before]**.
 
     ![copy_device_connection_string_01][copy_device_connection_string_01]
@@ -71,11 +77,13 @@
 
     ![copy_device_connection_string_02][copy_device_connection_string_02]
 
-3. Finish coping the **Connection String (primary key)** of Device.
+3. Finish copying the **Connection String (primary key)** of Device.
 
     ![copy_device_connection_string_03][copy_device_connection_string_03]
 
 ### View Device Messages
+
+> You can view the following device messages after section [Execute the SDK](#execute-the-sdk)
 
 1. On the right side of the search bar above, choose >_ to open **Cloud Shell**.
 
@@ -84,17 +92,19 @@
 2. Add extension **azure-cli-iot-ext** to Azure CLI.
 
     ```
-    $ az extension add --name azure-cli-iot-ext
+    user@Azure:~$ az extension add --name azure-cli-iot-ext
     ```
 
-2. Monitor device telemetry and messages that sent to IoT Hub.
+3. Monitor device telemetry and messages that sent to IoT Hub.
 
     ```
-    $ az iot hub monitor-events -n Example-IoT-Hub
+    user@Azure:~$ az iot hub monitor-events -n Example-IoT-Hub
     ```
     ![view_device_messages_02][view_device_messages_02]
 
 ## Host (x86_64-linux)
+
+> Cross-compiling the SDK
 
 ### Setup the Environment
 
@@ -110,15 +120,24 @@
 
 ### Build the SDK
 
-1. Setup dependencies and SDK to output directory.
+1. Clone repository of MOXA cloud connectivity tool from github.
 
     ```
-    $ ./setup.sh
+    user@Linux:~$ git clone https://github.com/MoxaCorp/ioThinx-4530-azure-iot.git
+    ```
+
+2. Setup dependencies and SDK to output directory.
+
+    ```
+    user@Linux:~$ cd azure
+    ```
+    ```
+    user@Linux:~/azure$ ./setup.sh
     ```
     * For more setup.sh options.
 
     ```
-    $ ./setup.sh --help
+    user@Linux:~/azure$ ./setup.sh --help
 
     Usage: ./setup.sh [options]
 
@@ -140,10 +159,10 @@
                             ./setup.sh --toolchain /usr/local/arm-linux-gnueabihf
     ```
 
-2. Add the **Connection String (primary key)** of Device to SDK sample code such as example **simplesample_amqp.c**. [[Copy Connection String](#copy-device-connection-string)]
+3. Add the **Connection String (primary key)** of Device to SDK sample code such as example **simplesample_amqp.c**. [[Copy Connection String](#copy-device-connection-string)]
 
     ```
-    $ vim output/sdk_azure/serializer/samples/simplesample_amqp/simplesample_amqp.c
+    user@Linux:~/azure$ vim output/sdk_azure/serializer/samples/simplesample_amqp/simplesample_amqp.c
     ```
     ```
     /*String containing Hostname, Device Id & Device Key in the format:             */
@@ -151,15 +170,15 @@
     static const char* connectionString = "HostName=Example-IoT-Hub.azure-devices.net;DeviceId=Example-Device;SharedAccessKey=hQUkHWv6Gq+1r2yQU5vLzQ86KUjyIquow+XuuDG1DqM=";
     ```
 
-3. Build the whole SDK.
+4. Build the whole SDK.
 
     ```
-    $ ./build.sh
+    user@Linux:~/azure$ ./build.sh
     ```
     * All compiled SDK program can be found in the following directory, including example **simplesample_amqp**.
 
     ```
-    $ tree output/sdk_azure/cmake/iotsdk_linux/serializer/samples
+    user@Linux:~/azure$ tree output/sdk_azure/cmake/iotsdk_linux/serializer/samples
     output/sdk_azure/cmake/iotsdk_linux/serializer/samples
     ├── devicemethod_simplesample
     │   └── devicemethod_simplesample
@@ -180,7 +199,7 @@
 * You can also reference to the MOXA sample code with ioThinx I/O library **moxa_sample_mqtt.c** in the following directory.
 
     ```
-    $ tree sample
+    user@Linux:~/azure$ tree sample
     sample
     ├── binary
     │   └── moxa_sample_mqtt
@@ -198,6 +217,8 @@
 
 ## Target (arm-linux)
 
+> Executing the SDK program
+
 ### Setup the Environment
 
 1. Setup a network connection to allow target able to access the network.
@@ -211,7 +232,7 @@
 3. Copy compiled SDK program from host to target.
 
     ```
-    $ tree
+    moxa@Moxa:~$ tree
     .
     └── simplesample_amqp
     ```
@@ -221,9 +242,8 @@
 1. Execute SDK program that cross-compiled by host.
 
     ```
-    $ sudo ./simplesample_amqp
+    moxa@Moxa:~$ sudo ./simplesample_amqp
     ```
-    * You need to install the dependency library for the SDK program if any not found.
 
 2. [View device messages on cloud](#view-device-messages).
 
