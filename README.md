@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2019 Moxa Inc. All rights reserved. -->
 <!-- SPDX-License-Identifier: Apache-2.0               -->
 
-# AZURE-IOT-SDK-C
+# ioThinx-4530-azure-iot
 
 > **Table of Contents**
 >
@@ -129,15 +129,15 @@
 2. Setup dependencies and SDK to output directory.
 
     ```
-    user@Linux:~$ cd azure
+    user@Linux:~$ cd ioThinx-4530-azure-iot
     ```
     ```
-    user@Linux:~/azure$ ./setup.sh
+    user@Linux:~/ioThinx-4530-azure-iot$ ./setup.sh
     ```
     * For more setup.sh options.
 
     ```
-    user@Linux:~/azure$ ./setup.sh --help
+    user@Linux:~/ioThinx-4530-azure-iot$ ./setup.sh --help
 
     Usage: ./setup.sh [options]
 
@@ -162,7 +162,7 @@
 3. Add the **Connection String (primary key)** of Device to SDK sample code such as example **simplesample_amqp.c**. [[Copy Connection String](#copy-device-connection-string)]
 
     ```
-    user@Linux:~/azure$ vim output/sdk_azure/serializer/samples/simplesample_amqp/simplesample_amqp.c
+    user@Linux:~/ioThinx-4530-azure-iot$ vim output/sdk_azure/serializer/samples/simplesample_amqp/simplesample_amqp.c
     ```
     ```
     /*String containing Hostname, Device Id & Device Key in the format:             */
@@ -173,12 +173,12 @@
 4. Build the whole SDK.
 
     ```
-    user@Linux:~/azure$ ./build.sh
+    user@Linux:~/ioThinx-4530-azure-iot$ ./build.sh
     ```
     * All compiled SDK program can be found in the following directory, including example **simplesample_amqp**.
 
     ```
-    user@Linux:~/azure$ tree output/sdk_azure/cmake/iotsdk_linux/serializer/samples
+    user@Linux:~/ioThinx-4530-azure-iot$ tree output/sdk_azure/cmake/iotsdk_linux/serializer/samples
     output/sdk_azure/cmake/iotsdk_linux/serializer/samples
     ├── devicemethod_simplesample
     │   └── devicemethod_simplesample
@@ -196,10 +196,10 @@
         └── temp_sensor_anomaly
     ```
 
-* You can also reference to the MOXA sample code with ioThinx I/O library **moxa_sample_mqtt.c** in the following directory.
+* You can also reference to the MOXA sample code with ioThinx I/O library **moxa_sample_mqtt.c** in the following directory. This sample code can be executed directly on the target device with module 45MR-2606 located in slot 1.
 
     ```
-    user@Linux:~/azure$ tree sample
+    user@Linux:~/ioThinx-4530-azure-iot$ tree sample
     sample
     ├── binary
     │   └── moxa_sample_mqtt
